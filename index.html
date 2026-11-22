@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Квест-рум «Последний звонок» | Пермь</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: 'Montserrat', sans-serif; 
+      background-color: #f8f9fa; 
+      color: #333333; 
+      line-height: 1.6; 
+      overflow-x: hidden; 
+    }
+    
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+    
+    /* ШАПКА */
+    .header { 
+      background: rgba(255, 255, 255, 0.95); 
+      backdrop-filter: blur(10px);
+      position: fixed; 
+      top: 0; 
+      width: 100%; 
+      z-index: 100; 
+      border-bottom: 1px solid #e0e0e0; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; }
+    .logo { font-family: 'Jolly Lodger', cursive; font-size: 30px; color: #d32f2f; text-decoration: none; letter-spacing: 1px; }
+    
+    .btn { 
+      background: #d32f2f; 
+      color: #fff; 
+      padding: 12px 24px; 
+      text-decoration: none; 
+      border-radius: 8px; 
+      font-weight: 600; 
+      border: none; 
+      cursor: pointer; 
+      font-family: inherit; 
+      font-size: 16px; 
+      transition: background 0.3s, transform 0.2s; 
+      box-shadow: 0 4px 10px rgba(211, 47, 47, 0.2);
+    }
+    .btn:hover { background: #b71c1c; transform: translateY(-2px); }
+    .btn-small { padding: 8px 16px; font-size: 14px; }
+    .btn-full { width: 100%; margin-top: 10px; }
+
+    /* ГЛАВНЫЙ ЭКРАН */
+    .hero { 
+      padding: 160px 0 100px; 
+      text-align: center; 
+      background: linear-gradient(135deg, #fff 0%, #ffeaea 100%);
+      position: relative;
+    }
+    .hero h1 { 
+      font-family: 'Jolly Lodger', cursive; 
+      font-size: 64px; 
+      color: #222; 
+      margin-bottom: 20px; 
+      line-height: 1.1; 
+      text-shadow: 2px 2px 0px rgba(211, 47, 47, 0.2);
+    }
+    .hero p { font-size: 20px; margin-bottom: 30px; color: #666; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    /* КВЕСТЫ */
+    .quests { padding: 80px 0; background: #f8f9fa; }
+    .section-title { 
+      font-family: 'Jolly Lodger', cursive; 
+      font-size: 48px; 
+      text-align: center; 
+      margin-bottom: 50px; 
+      color: #222; 
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+    
+    .quest-card { 
+      background: #fff; 
+      border-radius: 16px; 
+      overflow: hidden; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+      transition: 0.3s; 
+      border: 1px solid #eee;
+    }
+    .quest-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.12); }
+    
+    .quest-img { 
+      height: 240px; 
+      background-size: cover; 
+      background-position: center; 
+      position: relative; 
+    }
+    .badge { 
+      position: absolute; 
+      top: 15px; 
+      right: 15px; 
+      padding: 6px 14px; 
+      border-radius: 20px; 
+      font-size: 12px; 
+      font-weight: 700; 
+      text-transform: uppercase; 
+      color: #fff; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+    .light { background: #4caf50; }
+    .hard { background: #ff9800; }
+    .cartblanche { background: #d32f2f; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+    
+    .quest-info { padding: 25px; }
+    .quest-info h3 { font-size: 26px; color: #222; margin-bottom: 10px; font-weight: 700; }
+    .story { font-size: 15px; color: #666; margin-bottom: 20px; height: 110px; overflow: hidden; line-height: 1.5; }
+    
+    .stats { 
+      display: flex; 
+      justify-content: space-between; 
+      font-size: 14px; 
+      color: #444; 
+      margin-bottom: 20px; 
+      background: #f5f5f5; 
+      padding: 10px 15px; 
+      border-radius: 8px;
+      font-weight: 500;
+    }
+    
+    .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px;}
+    .price { font-size: 28px; font-weight: 800; color: #d32f2f; }
+
+    /* КОНТАКТЫ */
+    .contacts { padding: 80px 0; background: #fff; border-top: 1px solid #eee; }
+    .contact-box { 
+      background: #fff; 
+      padding: 40px; 
+      border-radius: 16px; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      border: 1px solid #eee;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    .contact-box p { margin-bottom: 15px; font-size: 16px; color: #444; display: flex; align-items: center; gap: 10px; }
+    .footer { text-align: center; padding: 30px; background: #f1f1f1; font-size: 14px; color: #888; }
+
+    /* МОДАЛЬНОЕ ОКНО */
+    .modal { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      background: rgba(0,0,0,0.6); 
+      z-index: 200; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 20px; 
+      backdrop-filter: blur(5px); 
+    }
+    .modal.active { display: flex; }
+    
+    .modal-content { 
+      background: #fff; 
+      border-radius: 16px; 
+      max-width: 450px; 
+      width: 100%; 
+      padding: 35px; 
+      position: relative; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2); 
+    }
+    .close { position: absolute; right: 20px; top: 15px; font-size: 30px; cursor: pointer; color: #aaa; transition: 0.2s; }
+    .close:hover { color: #d32f2f; }
+    .modal-content h2 { font-size: 24px; color: #222; margin-bottom: 25px; text-align: center; font-weight: 700; }
+    .modal-content label { display: block; margin: 15px 0 8px; font-size: 13px; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+    
+    .modal-content input, .modal-content select { 
+      width: 100%; 
+      padding: 14px; 
+      background: #f9f9f9; 
+      border: 2px solid #eee; 
+      border-radius: 8px; 
+      color: #333; 
+      font-family: inherit; 
+      font-size: 16px; 
+      transition: border-color 0.3s;
+    }
+    .modal-content input:focus, .modal-content select:focus { border-color: #d32f2f; outline: none; background: #fff; }
+    .modal-content select:disabled { color: #aaa; cursor: not-allowed; background: #eee; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 48px; }
+      .hero { padding: 140px 0 60px; }
+      .grid { grid-template-columns: 1fr; }
+      .story { height: auto; min-height: 100px; }
+      .stats { flex-wrap: wrap; gap: 10px; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container header-inner">
+      <a href="#" class="logo">🔔 Последний звонок</a>
+      <a href="#quests" class="btn btn-small">Выбрать квест</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Выбери свой страх</h1>
+      <p>Погрузись в атмосферу настоящего квеста в Перми. Мы гарантируем выброс адреналина и незабываемые эмоции.</p>
+      <a href="#quests" class="btn" style="padding: 16px 40px; font-size: 18px;">Смотреть квесты</a>
+    </div>
+  </section>
+
+  <section class="quests" id="quests">
+    <div class="container">
+      <h2 class="section-title">Наши комнаты</h2>
+      <div class="grid">
+        
+        <div class="quest-card">
+          <div class="quest-img" style="background-image: url('https://images.unsplash.com/photo-1575364154354-0fb0c4c3b0f6?q=80&w=800&auto=format&fit=crop');">
+            <span class="badge light">Лайт-Медиум</span>
+          </div>
+          <div class="quest-info">
+            <h3>Последний звонок</h3>
+            <p class="story">В 1994 году в школе №13 на выпускном погибла учительница химии. Вы знали правду, но молчали. Спустя 30 лет вы получаете приглашение в ту самую заброшку. Дверь захлопывается. Звонок звучит как сирена: «Экзамен начинается. Если не сдадите — останетесь здесь навсегда». Она вернулась, чтобы заставить вас признаться.</p>
+            <div class="stats">
+              <span>👥 4-8 чел.</span><span>🎭 2 актера</span><span>⏱ 60 мин</span>
+            </div>
+            <div class="price-row">
+              <span class="price">7000 ₽</span>
+              <button class="btn" onclick="openBooking('Последний звонок')">Забронировать</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest-card">
+          <div class="quest-img" style="background-image: url('https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=800&auto=format&fit=crop');">
+            <span class="badge hard">Хард</span>
+          </div>
+          <div class="quest-info">
+            <h3>Черная метка</h3>
+            <p class="story">Вы — охотники за сокровищами. В трюме корабля «Медуза» вы находите сундук, но вместо золота там черные метки с вашими именами. Вы активировали проклятие. Теперь вы — часть команды мертвецов. У вас есть час, чтобы снять его, пока корабль не ушел под воду. Пираты не любят чужаков.</p>
+            <div class="stats">
+              <span>👥 4-8 чел.</span><span>🎭 3 актера</span><span>⏱ 60 мин</span>
+            </div>
+            <div class="price-row">
+              <span class="price">8500 ₽</span>
+              <button class="btn" onclick="openBooking('Черная метка')">Забронировать</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="quest-card">
+          <div class="quest-img" style="background-image: url('https://images.unsplash.com/photo-1533220277796-9ae0b8d8db62?q=80&w=800&auto=format&fit=crop');">
+            <span class="badge cartblanche">Карт-бланш</span>
+          </div>
+          <div class="quest-info">
+            <h3>Палата №6</h3>
+            <p class="story">Вы очнулись в палате старой лечебницы. Руки стянуты, в глазах туман. Врачи говорят, что вы опасны. Но с каждым шагом вы понимаете: один из вашей команды — не тот, за кого себя выдает. Или вы все — просто марионетки главврача. Сможете ли вы отличить реальность от галлюцинации?</p>
+            <div class="stats">
+              <span>👥 4-10 чел.</span><span>🎭 4-5 актеров</span><span>⏱ 60 мин</span>
+            </div>
+            <div class="price-row">
+              <span class="price">12000 ₽</span>
+              <button class="btn" onclick="openBooking('Палата №6')">Забронировать</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="contacts" id="contacts">
+    <div class="container">
+      <h2 class="section-title">Как нас найти</h2>
+      <div class="contact-box">
+        <p>📍 <strong>Адрес:</strong> г. Пермь, ул. Монастырская, 14А (вход со двора)</p>
+        <p>📞 <strong>Телефон:</strong> <a href="tel:+73422998811" style="color:#d32f2f; text-decoration:none; font-weight:600;">+7 (342) 299-88-11</a></p>
+        <p>✉️ <strong>Почта:</strong> horror@lastbell.ru</p>
+        <p>🕒 <strong>Время:</strong> Ежедневно с 13:00 до 00:00</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2024 Квест-рум «Последний звонок». Все страхи защищены.</p>
+  </footer>
+
+  <!-- МОДАЛЬНОЕ ОКНО -->
+  <div class="modal" id="bookingModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeBooking()">&times;</span>
+      <h2 id="modalTitle">Бронь квеста</h2>
+      <form onsubmit="submitBooking(event)">
+        <label>Ваше имя</label>
+        <input type="text" id="bookName" required placeholder="Иван">
+        
+        <label>Телефон</label>
+        <input type="tel" id="bookPhone" required placeholder="+7 (999) 000-00-00">
+        
+        <label>Дата</label>
+        <input type="date" id="bookDate" required onchange="updateTimeSlots()">
+        
+        <label>Время</label>
+        <select id="bookTime" required>
+          <option value="">Сначала выберите дату</option>
+        </select>
+        
+        <button type="submit" id="submitBtn" class="btn btn-full" style="margin-top: 25px; padding: 15px;">Забронировать</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const TG_TOKEN = "9094392410:AAFf3xEIygJUOOg74AJdcut5qeObhtYmlfA";
+    const TG_CHAT_ID = "7730326103";
+    
+    let currentQuestName = "";
+    let bookedSlots = JSON.parse(localStorage.getItem('bookedSlots')) || {};
+
+    function openBooking(name) {
+      currentQuestName = name;
+      document.getElementById("modalTitle").innerText = "Бронь: " + name;
+      document.getElementById("bookingModal").classList.add("active");
+      
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById("bookDate").min = today;
+      document.getElementById("bookTime").innerHTML = '<option value="">Сначала выберите дату</option>';
+    }
+
+    function closeBooking() {
+      document.getElementById("bookingModal").classList.remove("active");
+    }
+
+    function updateTimeSlots() {
+      const dateInput = document.getElementById("bookDate").value;
+      const timeSelect = document.getElementById("bookTime");
+      if (!dateInput) return;
+      
+      timeSelect.innerHTML = ""; 
+      
+      let startHour = 13;
+      let startMinute = 0;
+      
+      while (startHour < 23) {
+        let timeString = `${startHour.toString().padStart(2, '0')}:${startMinute.toString().padStart(2, '0')}`;
+        
+        let isBooked = false;
+        if (bookedSlots[dateInput] && bookedSlots[dateInput].includes(timeString)) {
+          isBooked = true;
+        }
+        
+        let option = document.createElement("option");
+        option.value = timeString;
+        option.text = isBooked ? `${timeString} (Занято)` : timeString;
+        option.disabled = isBooked; 
+        
+        timeSelect.appendChild(option);
+        
+        startMinute += 30;
+        startHour += 1;
+        if (startMinute >= 60) {
+          startMinute -= 60;
+          startHour += 1;
+        }
+      }
+    }
+
+    async function submitBooking(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById("bookName").value;
+      const phone = document.getElementById("bookPhone").value;
+      const date = document.getElementById("bookDate").value;
+      const time = document.getElementById("bookTime").value;
+
+      if (!time) {
+        alert("Пожалуйста, выберите время из списка.");
+        return;
+      }
+
+      const btn = document.getElementById("submitBtn");
+      btn.innerText = "Отправка...";
+      btn.disabled = true;
+
+      const message = `🔔 <b>НОВАЯ БРОНЬ!</b>\n\n` +
+                      `🎮 <b>Квест:</b> ${currentQuestName}\n` +
+                      `👤 <b>Имя:</b> ${name}\n` +
+                      `📞 <b>Телефон:</b> ${phone}\n` +
+                      `📅 <b>Дата:</b> ${date}\n` +
+                      `⏰ <b>Время:</b> ${time}`;
+
+      try {
+        const url = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TG_CHAT_ID,
+            text: message,
+            parse_mode: "HTML"
+          })
+        });
+
+        if (response.ok) {
+          if (!bookedSlots[date]) bookedSlots[date] = [];
+          bookedSlots[date].push(time);
+          localStorage.setItem('bookedSlots', JSON.stringify(bookedSlots));
+
+          alert(`Спасибо, ${name}! Ваша заявка отправлена. Мы перезвоним в течение 5 минут.`);
+          closeBooking();
+          document.querySelector("form").reset();
+        } else {
+          alert("Ошибка при отправке. Пожалуйста, позвоните нам.");
+        }
+      } catch (error) {
+        alert("Ошибка сети. Проверьте интернет и попробуйте снова.");
+      } finally {
+        btn.innerText = "Забронировать";
+        btn.disabled = false;
+      }
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("bookingModal");
+      if (event.target === modal) closeBooking();
+    }
+  </script>
+
+</body>
+</html>
